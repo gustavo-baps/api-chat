@@ -23,4 +23,4 @@ async function insertOne(collection, objeto){
     return db.collection(collection).insertOne(objeto);
 }
 
-module.exports={findAll}
+module.exports={findAll, insertOne}
