@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+const token = require("./util/token");
 const salaController = require("./controller/salaController");
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
