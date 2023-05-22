@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+const salaController = require("./controller/salaController");
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
@@ -17,15 +18,21 @@ app.use('/', router.get('/sobre', (req, res)=>{
 }));
 
 app.use('/', router.get('/salas', async (req, res)=>{
-    const salaController = require("./controller/salaController");
+    console.log(req.headers);
+    if(!token.checktoken(req.headers.token, req.headers.iduser, req.headers.nick))return false;
     let resp = await salaController.get();
     res.status(200).send(resp);
 }));
 
 app.use('/',router.post('/entrar',async(req, res, next)=>{
-    const usuarioController = require('./controller/usuarioController');
+    const usuarioController = require("./controller/usuarioController");
     let resp = await usuarioController.entrar(req.body.nick);
     res.status(200).send(resp);
 }));
 
-module.exports=app
+app.use('sala/entrar',router.get('sala/entrar', async(req, res)=>{
+    if(!token.checktoken(req.headers.token, req.headers.iduser, req.headers.nick))return false;
+    let resp = await salaController.entrar();
+    res.status(200).send(resp);
+}));
+module.exports=app;

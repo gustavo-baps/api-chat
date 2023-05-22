@@ -23,4 +23,9 @@ async function insertOne(collection, objeto){
     return db.collection(collection).insertOne(objeto);
 }
 
+async function findOne(collection, objeto){
+    const db = await connect();
+    let salas = await db.collection(collection).find(object);
+} 
+
 module.exports={findAll, insertOne}
