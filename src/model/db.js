@@ -11,11 +11,9 @@ async function connect(){
     return singleton;
 }
 
-async function findAll(collection){
+let findAll = async (collection)=>{
     const db = await connect();
-    let salas = await db.collection(collection).find().toArray();
-    console.log(salas);
-    return salas;
+    return await db.collection(collection).find().toArray();
 }
 
 async function insertOne(collection, objeto){
@@ -23,9 +21,17 @@ async function insertOne(collection, objeto){
     return db.collection(collection).insertOne(objeto);
 }
 
-async function findOne(collection, objeto){
+let findOne = async(collection, _id)=>{
     const db = await connect();
-    let salas = await db.collection(collection).find(object);
-} 
+    let obj = await db.collection(collection).find({'_id':new ObjectId(_id)}).toArray();
+    if(obj)
+        return obj[0];
+    return false;
+}
+let updateOne = async (collection, objeto, param)=>{
+    const db = await connect();
+    let result = await db.collection(collection).updateOne(param,{$set: objeto});
+    return result;
+}
 
-module.exports={findAll, insertOne}
+module.exports={findAll, insertOne, findOne, updateOne};
