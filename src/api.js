@@ -43,7 +43,7 @@ app.use("/salas",router.get("/salas/listar", async (req, res, next) => {
     }
 }))
 
-app.use('/salas/entrar',router.get('/salas/entrar', async(req, res)=>{
+app.use('/salas',router.get('/salas/entrar', async(req, res)=>{
     req.headers.nick = nickUser;
     req.headers.iduser = idUser;
     req.headers.token = tokenUser;
