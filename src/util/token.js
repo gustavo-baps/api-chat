@@ -1,9 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 const checktoken = (token, id, key) => {
-    console.log("token: "+token)
-    console.log("id: "+id)
-    console.log("key: "+key)
     try{
         const dec = jwt.verify(token, key, (err, decoded) =>{
             if (err){

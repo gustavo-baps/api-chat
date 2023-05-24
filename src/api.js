@@ -26,7 +26,7 @@ app.use('/entrar',router.post('/entrar',async(req, res, next)=>{
     idUser = resp.iduser;
     tokenUser = resp.token;
     res.status(200).send(resp);
-    console.log('entrar deu certo');
+    console.log('entrar ok');
 }));
 
 app.use("/salas",router.get("/salas/listar", async (req, res, next) => {
@@ -37,7 +37,7 @@ app.use("/salas",router.get("/salas/listar", async (req, res, next) => {
     {
         let resp = await salaController.get();
         res.status(200).send(resp);
-        console.log('salas deu certo');
+        console.log('listar salas ok');
     }else{
         res.status(400).send({msg:"Usuário não autorizado"});
     }
@@ -51,7 +51,7 @@ app.use('/salas/entrar',router.get('/salas/entrar', async(req, res)=>{
         return false;
     let resp = await salaController.entrar(req.header.iduser, req.query.idsala);
     req.status(200).send(resp);
-    console.log('entrar deu certo');
+    console.log('entrar ok');
 }));
 
 app.use("/salas/mensagem", router.post("/salas/mensagem", async (req, res) => {
