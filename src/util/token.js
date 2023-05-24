@@ -1,28 +1,31 @@
 const jwt = require('jsonwebtoken');
 
 const checktoken = (token, id, key) => {
-  try {
-    if (!token) {
-      return false; // Token não fornecido
+    console.log("token: "+token)
+    console.log("id: "+id)
+    console.log("key: "+key)
+    try{
+        const dec = jwt.verify(token, key, (err, decoded) =>{
+            if (err){
+                return false;
+            }
+            if (decoded){
+                if(decoded.id !=id) return false;
+            }
+        });
+       
+            return true;
+    }catch(e){
+        console.log("e do checktoken: "+e);
     }
-    const decoded = jwt.verify(token, key);
-    if (decoded.id === id) {
-      return true; // Usuário autorizado
-    } else {
-      return false; // ID do usuário não corresponde ao token
-    }
-  } catch (e) {
-    console.log(e);
-    return false; // Token inválido ou erro ao decodificar
-  }
 };
 
-const setToken = (id, key) => {
+const setToken = async (id, key) => {
   console.log(id);
-  if (id) {
-    return jwt.sign({ id }, key, { expiresIn: '8h' });
-  }
-  return false; // ID não fornecido
+    if(id){
+        return jwt.sign({id}, key, {expiresIn: 28800});
+    }
+    return false;
 };
 
 module.exports = {checktoken, setToken};
